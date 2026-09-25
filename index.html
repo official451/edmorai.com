@@ -1,0 +1,1967 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EDMOR Technology｜讓 AI 看懂真實世界</title>
+    <meta
+      name="description"
+      content="EDMOR Technology 艾德摩爾科技以 AI 為工具，從真實場域需求出發，整合影像、語音與資料，協助組織理解情境並做出更好的決策。"
+    />
+    <meta name="theme-color" content="#061b2d" />
+    <link rel="canonical" href="https://edmor-technology.a0938528939.chatgpt.site" />
+    <link rel="icon" type="image/png" href="assets/edmor-mark.png" />
+    <style>
+      :root {
+        --ink: #122735;
+        --ink-soft: #536874;
+        --navy: #061b2d;
+        --navy-2: #0a2a40;
+        --blue: #006cb0;
+        --cyan: #009bda;
+        --sky: #87c9e6;
+        --ice: #eaf7fc;
+        --paper: #ffffff;
+        --mist: #f4f8fa;
+        --line: rgba(18, 39, 53, 0.13);
+        --gold: #e7a24e;
+        --radius: 1.4rem;
+        --shadow: 0 24px 70px rgba(6, 27, 45, 0.12);
+        --container: min(74rem, calc(100% - 3rem));
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 5.5rem;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--paper);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+        font-size: 1rem;
+        line-height: 1.75;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      button,
+      a {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      ::selection {
+        color: #fff;
+        background: var(--blue);
+      }
+
+      .skip-link {
+        position: fixed;
+        z-index: 200;
+        top: 0.75rem;
+        left: 0.75rem;
+        padding: 0.7rem 1rem;
+        border-radius: 0.6rem;
+        color: #fff;
+        background: var(--blue);
+        transform: translateY(-180%);
+        transition: transform 180ms ease;
+      }
+
+      .skip-link:focus {
+        transform: translateY(0);
+      }
+
+      .container {
+        width: var(--container);
+        margin-inline: auto;
+      }
+
+      .site-header {
+        position: fixed;
+        z-index: 100;
+        inset: 0 0 auto;
+        height: 5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(6, 27, 45, 0.72);
+        backdrop-filter: blur(18px);
+        transition: background 220ms ease, box-shadow 220ms ease;
+      }
+
+      .site-header.is-scrolled {
+        background: rgba(6, 27, 45, 0.94);
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
+      }
+
+      .nav-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        flex: 0 0 auto;
+      }
+
+      .brand img {
+        width: 10rem;
+        height: auto;
+        filter: brightness(0) invert(1);
+      }
+
+      .site-nav {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .site-nav a {
+        position: relative;
+        color: rgba(255, 255, 255, 0.74);
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        transition: color 180ms ease;
+      }
+
+      .site-nav a::after {
+        position: absolute;
+        right: 0;
+        bottom: -0.55rem;
+        left: 0;
+        height: 2px;
+        content: "";
+        background: var(--cyan);
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 180ms ease;
+      }
+
+      .site-nav a:hover,
+      .site-nav a:focus-visible,
+      .site-nav a.is-active {
+        color: #fff;
+      }
+
+      .site-nav a:hover::after,
+      .site-nav a:focus-visible::after,
+      .site-nav a.is-active::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+
+      .nav-cta {
+        padding: 0.62rem 1.05rem;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 999px;
+      }
+
+      .site-nav .nav-cta::after {
+        display: none;
+      }
+
+      .site-nav .nav-cta:hover,
+      .site-nav .nav-cta:focus-visible {
+        border-color: var(--cyan);
+        background: rgba(0, 155, 218, 0.14);
+      }
+
+      .menu-toggle {
+        display: none;
+        width: 2.75rem;
+        height: 2.75rem;
+        padding: 0;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 50%;
+        color: #fff;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .menu-toggle span {
+        display: block;
+        width: 1.15rem;
+        height: 2px;
+        margin: 0.26rem auto;
+        background: currentColor;
+        transition: transform 180ms ease, opacity 180ms ease;
+      }
+
+      .menu-toggle[aria-expanded="true"] span:first-child {
+        transform: translateY(6px) rotate(45deg);
+      }
+
+      .menu-toggle[aria-expanded="true"] span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .menu-toggle[aria-expanded="true"] span:last-child {
+        transform: translateY(-6px) rotate(-45deg);
+      }
+
+      .hero {
+        position: relative;
+        display: grid;
+        align-items: center;
+        min-height: 100svh;
+        padding: 8.5rem 0 5rem;
+        color: #fff;
+        background:
+          radial-gradient(circle at 73% 42%, rgba(0, 155, 218, 0.23), transparent 30rem),
+          linear-gradient(135deg, #041624 0%, #08283d 58%, #063452 100%);
+        isolation: isolate;
+      }
+
+      .hero::before {
+        position: absolute;
+        z-index: -1;
+        inset: 0;
+        content: "";
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+        background-size: 4.5rem 4.5rem;
+        mask-image: linear-gradient(to bottom, #000 0%, transparent 86%);
+      }
+
+      .hero::after {
+        position: absolute;
+        z-index: -1;
+        right: -13rem;
+        bottom: -20rem;
+        width: 42rem;
+        height: 42rem;
+        border: 1px solid rgba(135, 201, 230, 0.17);
+        border-radius: 50%;
+        content: "";
+        box-shadow:
+          0 0 0 6rem rgba(135, 201, 230, 0.025),
+          0 0 0 12rem rgba(135, 201, 230, 0.018);
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.08fr) minmax(22rem, 0.92fr);
+        gap: clamp(3rem, 8vw, 7rem);
+        align-items: center;
+      }
+
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin: 0 0 1.35rem;
+        color: var(--blue);
+        font-size: 0.78rem;
+        font-weight: 750;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        width: 2.15rem;
+        height: 1px;
+        content: "";
+        background: currentColor;
+      }
+
+      .hero .eyebrow {
+        color: var(--sky);
+      }
+
+      .hero h1 {
+        max-width: 13ch;
+        margin: 0;
+        font-size: clamp(2.8rem, 6.2vw, 5.6rem);
+        font-weight: 720;
+        line-height: 1.08;
+        letter-spacing: -0.045em;
+        text-wrap: balance;
+      }
+
+      .hero h1 em {
+        color: var(--sky);
+        font-style: normal;
+      }
+
+      .hero-lede {
+        max-width: 39rem;
+        margin: 1.6rem 0 0;
+        color: rgba(255, 255, 255, 0.72);
+        font-size: clamp(1.04rem, 1.7vw, 1.22rem);
+        line-height: 1.85;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.85rem;
+        margin-top: 2.25rem;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.7rem;
+        min-height: 3.25rem;
+        padding: 0.78rem 1.35rem;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        font-weight: 700;
+        line-height: 1.2;
+        transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+      }
+
+      .button::after {
+        content: "↗";
+        font-size: 1.05em;
+      }
+
+      .button:hover,
+      .button:focus-visible {
+        transform: translateY(-2px);
+      }
+
+      .button-primary {
+        color: #fff;
+        background: var(--cyan);
+        box-shadow: 0 14px 36px rgba(0, 155, 218, 0.3);
+      }
+
+      .button-primary:hover,
+      .button-primary:focus-visible {
+        background: #08a8e8;
+      }
+
+      .button-ghost {
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.28);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .button-ghost:hover,
+      .button-ghost:focus-visible {
+        border-color: rgba(255, 255, 255, 0.52);
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .context-field {
+        position: relative;
+        width: min(100%, 31rem);
+        aspect-ratio: 1;
+        margin-inline: auto;
+        border: 1px solid rgba(255, 255, 255, 0.13);
+        border-radius: 50%;
+        background:
+          radial-gradient(circle at 50% 50%, rgba(0, 155, 218, 0.15), transparent 38%),
+          rgba(255, 255, 255, 0.018);
+        box-shadow: inset 0 0 80px rgba(0, 155, 218, 0.06);
+      }
+
+      .context-field::before,
+      .context-field::after {
+        position: absolute;
+        inset: 12%;
+        border: 1px dashed rgba(135, 201, 230, 0.24);
+        border-radius: 50%;
+        content: "";
+      }
+
+      .context-field::after {
+        inset: 27%;
+        border-style: solid;
+        border-color: rgba(135, 201, 230, 0.17);
+      }
+
+      .field-axis,
+      .field-axis::after {
+        position: absolute;
+        top: 50%;
+        left: 8%;
+        width: 84%;
+        height: 1px;
+        content: "";
+        background: linear-gradient(90deg, transparent, rgba(135, 201, 230, 0.2), transparent);
+      }
+
+      .field-axis::after {
+        top: 0;
+        left: 0;
+        width: 100%;
+        transform: rotate(90deg);
+      }
+
+      .field-core {
+        position: absolute;
+        z-index: 2;
+        top: 50%;
+        left: 50%;
+        display: grid;
+        place-items: center;
+        width: 8.25rem;
+        height: 8.25rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        background: rgba(4, 22, 36, 0.76);
+        box-shadow: 0 0 50px rgba(0, 155, 218, 0.24);
+        transform: translate(-50%, -50%);
+        backdrop-filter: blur(12px);
+      }
+
+      .field-core img {
+        width: 5.2rem;
+      }
+
+      .field-label {
+        position: absolute;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 5.8rem;
+        min-height: 2.65rem;
+        place-items: center;
+        padding: 0.5rem 0.8rem;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 999px;
+        color: rgba(255, 255, 255, 0.84);
+        background: rgba(6, 27, 45, 0.8);
+        font-size: 0.82rem;
+        font-weight: 650;
+        letter-spacing: 0.04em;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+        backdrop-filter: blur(12px);
+      }
+
+      .field-label::before {
+        width: 0.4rem;
+        height: 0.4rem;
+        margin-right: 0.45rem;
+        border-radius: 50%;
+        content: "";
+        background: var(--cyan);
+        box-shadow: 0 0 12px var(--cyan);
+      }
+
+      .field-label span {
+        display: flex;
+        align-items: center;
+      }
+
+      .field-label:nth-of-type(2) {
+        top: 9%;
+        left: 16%;
+      }
+
+      .field-label:nth-of-type(3) {
+        top: 20%;
+        right: 5%;
+      }
+
+      .field-label:nth-of-type(4) {
+        right: 5%;
+        bottom: 17%;
+      }
+
+      .field-label:nth-of-type(5) {
+        bottom: 8%;
+        left: 8%;
+      }
+
+      .field-output {
+        position: absolute;
+        z-index: 4;
+        right: -4%;
+        bottom: 42%;
+        padding: 0.78rem 1rem;
+        border-left: 3px solid var(--cyan);
+        color: #fff;
+        background: linear-gradient(90deg, rgba(0, 155, 218, 0.2), rgba(0, 155, 218, 0.03));
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .hero-footnote {
+        position: absolute;
+        right: 0;
+        bottom: 1.5rem;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.7rem;
+        color: rgba(255, 255, 255, 0.42);
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .hero-footnote::before {
+        width: 1px;
+        height: 2.3rem;
+        content: "";
+        background: linear-gradient(#fff, transparent);
+      }
+
+      .section {
+        padding: clamp(5.5rem, 10vw, 9rem) 0;
+      }
+
+      .section-head {
+        display: grid;
+        grid-template-columns: 0.72fr 1.28fr;
+        gap: 4rem;
+        align-items: end;
+        margin-bottom: 4rem;
+      }
+
+      .section-head h2,
+      .split-copy h2,
+      .tailu-copy h2,
+      .contact-copy h2 {
+        margin: 0;
+        font-size: clamp(2rem, 4vw, 3.8rem);
+        font-weight: 720;
+        line-height: 1.16;
+        letter-spacing: -0.035em;
+        text-wrap: balance;
+      }
+
+      .section-head > p,
+      .split-copy > p,
+      .tailu-copy > p,
+      .contact-copy > p {
+        margin: 0;
+        color: var(--ink-soft);
+        font-size: 1.06rem;
+      }
+
+      .philosophy {
+        background: var(--paper);
+      }
+
+      .philosophy-grid {
+        display: grid;
+        grid-template-columns: 0.88fr 1.12fr;
+        gap: clamp(2.5rem, 7vw, 6rem);
+        align-items: center;
+      }
+
+      .comparison {
+        position: relative;
+        display: grid;
+        gap: 1rem;
+      }
+
+      .comparison::before {
+        position: absolute;
+        z-index: 0;
+        top: 50%;
+        right: -2rem;
+        width: 4rem;
+        height: 1px;
+        content: "";
+        background: var(--line);
+      }
+
+      .compare-card {
+        position: relative;
+        z-index: 1;
+        padding: 1.5rem 1.6rem;
+        border: 1px solid var(--line);
+        border-radius: 1.1rem;
+        background: var(--paper);
+      }
+
+      .compare-card:first-child {
+        width: 82%;
+        color: #7b8c95;
+        background: var(--mist);
+      }
+
+      .compare-card:last-child {
+        width: 92%;
+        margin-left: auto;
+        border-color: rgba(0, 155, 218, 0.3);
+        background: linear-gradient(135deg, #f2fbfe, #e6f7fd);
+        box-shadow: var(--shadow);
+      }
+
+      .compare-label {
+        display: block;
+        margin-bottom: 0.4rem;
+        color: inherit;
+        font-size: 0.76rem;
+        font-weight: 760;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+      }
+
+      .compare-card strong {
+        display: block;
+        font-size: 1.45rem;
+        line-height: 1.35;
+      }
+
+      .compare-card p {
+        margin: 0.45rem 0 0;
+        color: var(--ink-soft);
+        font-size: 0.94rem;
+      }
+
+      .split-copy {
+        display: grid;
+        gap: 1.25rem;
+      }
+
+      .principle-line {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 1rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--line);
+        color: var(--ink);
+        font-weight: 700;
+      }
+
+      .principle-line span {
+        display: grid;
+        flex: 0 0 auto;
+        width: 2.65rem;
+        height: 2.65rem;
+        place-items: center;
+        border-radius: 50%;
+        color: #fff;
+        background: var(--blue);
+      }
+
+      .engine {
+        position: relative;
+        color: #fff;
+        background: var(--navy);
+        overflow: hidden;
+      }
+
+      .engine::before {
+        position: absolute;
+        top: -18rem;
+        left: 50%;
+        width: 44rem;
+        height: 44rem;
+        border: 1px solid rgba(135, 201, 230, 0.09);
+        border-radius: 50%;
+        content: "";
+        transform: translateX(-50%);
+        box-shadow: 0 0 0 6rem rgba(135, 201, 230, 0.02);
+      }
+
+      .engine .section-head {
+        position: relative;
+      }
+
+      .engine .section-head > p {
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      .engine-flow {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.1rem;
+      }
+
+      .engine-flow::before {
+        position: absolute;
+        z-index: 0;
+        top: 3.15rem;
+        right: 16.5%;
+        left: 16.5%;
+        height: 1px;
+        content: "";
+        background: linear-gradient(90deg, var(--cyan), rgba(135, 201, 230, 0.2), var(--cyan));
+      }
+
+      .engine-card {
+        position: relative;
+        z-index: 1;
+        min-height: 23rem;
+        padding: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.13);
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.045);
+        backdrop-filter: blur(8px);
+        transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
+      }
+
+      .engine-card:hover {
+        border-color: rgba(0, 155, 218, 0.5);
+        background: rgba(0, 155, 218, 0.07);
+        transform: translateY(-0.4rem);
+      }
+
+      .engine-number {
+        display: grid;
+        width: 3.2rem;
+        height: 3.2rem;
+        place-items: center;
+        margin-bottom: 3.4rem;
+        border: 1px solid rgba(135, 201, 230, 0.4);
+        border-radius: 50%;
+        color: var(--sky);
+        background: var(--navy);
+        font-size: 0.82rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+      }
+
+      .engine-card h3 {
+        margin: 0;
+        font-size: 1.55rem;
+        letter-spacing: -0.02em;
+      }
+
+      .engine-card h3 span {
+        display: block;
+        margin-top: 0.3rem;
+        color: var(--sky);
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .engine-card p {
+        margin: 1rem 0 0;
+        color: rgba(255, 255, 255, 0.62);
+      }
+
+      .engine-tag {
+        display: inline-flex;
+        margin-top: 1.3rem;
+        padding: 0.4rem 0.75rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 999px;
+        color: rgba(255, 255, 255, 0.64);
+        font-size: 0.76rem;
+      }
+
+      .capabilities {
+        background: var(--mist);
+      }
+
+      .capability-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 1rem;
+      }
+
+      .capability-card {
+        position: relative;
+        display: flex;
+        min-height: 17rem;
+        flex-direction: column;
+        justify-content: space-between;
+        grid-column: span 4;
+        padding: 1.75rem;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--paper);
+        overflow: hidden;
+        transition: transform 200ms ease, box-shadow 200ms ease;
+      }
+
+      .capability-card:nth-child(4),
+      .capability-card:nth-child(5) {
+        min-height: 15rem;
+        grid-column: span 6;
+      }
+
+      .capability-card:hover {
+        box-shadow: 0 18px 45px rgba(6, 27, 45, 0.1);
+        transform: translateY(-0.35rem);
+      }
+
+      .capability-card::after {
+        position: absolute;
+        right: -2.5rem;
+        bottom: -3.5rem;
+        width: 9rem;
+        height: 9rem;
+        border: 1px solid rgba(0, 155, 218, 0.13);
+        border-radius: 50%;
+        content: "";
+        box-shadow: 0 0 0 1.4rem rgba(0, 155, 218, 0.025);
+      }
+
+      .capability-index {
+        color: var(--blue);
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+      }
+
+      .capability-card h3 {
+        max-width: 15ch;
+        margin: 2.8rem 0 0.55rem;
+        font-size: 1.35rem;
+        line-height: 1.35;
+      }
+
+      .capability-card p {
+        max-width: 29rem;
+        margin: 0;
+        color: var(--ink-soft);
+        font-size: 0.94rem;
+      }
+
+      .tailu {
+        position: relative;
+        background: #eef8fb;
+        overflow: hidden;
+      }
+
+      .tailu::before {
+        position: absolute;
+        top: 10%;
+        right: -9rem;
+        width: 31rem;
+        height: 31rem;
+        border: 1px solid rgba(0, 108, 176, 0.12);
+        border-radius: 50%;
+        content: "";
+        box-shadow:
+          0 0 0 4rem rgba(0, 155, 218, 0.025),
+          0 0 0 8rem rgba(0, 155, 218, 0.018);
+      }
+
+      .tailu-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.75fr);
+        gap: clamp(3rem, 8vw, 7rem);
+        align-items: center;
+      }
+
+      .tailu-copy {
+        position: relative;
+        z-index: 2;
+      }
+
+      .tailu-copy h2 span {
+        color: var(--gold);
+      }
+
+      .tailu-copy > p {
+        max-width: 40rem;
+        margin-top: 1.4rem;
+      }
+
+      .product-flow {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+        margin-top: 2.3rem;
+      }
+
+      .product-step {
+        padding: 1.15rem;
+        border: 1px solid rgba(0, 108, 176, 0.16);
+        border-radius: 1rem;
+        background: rgba(255, 255, 255, 0.72);
+      }
+
+      .product-step span {
+        display: block;
+        margin-bottom: 0.3rem;
+        color: var(--blue);
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.11em;
+      }
+
+      .product-step strong {
+        display: block;
+        font-size: 0.96rem;
+      }
+
+      .product-note {
+        margin-top: 1.8rem;
+        padding-left: 1rem;
+        border-left: 3px solid var(--gold);
+        color: var(--ink-soft);
+        font-size: 0.92rem;
+      }
+
+      .phone-stage {
+        position: relative;
+        display: grid;
+        min-height: 40rem;
+        place-items: center;
+      }
+
+      .phone-stage::before {
+        position: absolute;
+        width: 23rem;
+        height: 23rem;
+        border-radius: 50%;
+        content: "";
+        background: radial-gradient(circle, rgba(0, 155, 218, 0.18), rgba(0, 155, 218, 0));
+      }
+
+      .phone-stage img {
+        position: relative;
+        z-index: 1;
+        width: min(100%, 20rem);
+        border-radius: 1.5rem;
+        filter: drop-shadow(0 30px 35px rgba(6, 27, 45, 0.14));
+        mix-blend-mode: multiply;
+      }
+
+      .advantages {
+        background: var(--paper);
+      }
+
+      .advantage-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .advantage-card {
+        position: relative;
+        min-height: 22rem;
+        padding: 2rem 1.5rem;
+        border-right: 1px solid var(--line);
+        overflow: hidden;
+      }
+
+      .advantage-card:last-child {
+        border-right: 0;
+      }
+
+      .advantage-number {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        color: rgba(0, 108, 176, 0.08);
+        font-size: clamp(6rem, 12vw, 10rem);
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: -0.08em;
+      }
+
+      .advantage-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+
+      .advantage-card h3 {
+        margin: 0 0 0.75rem;
+        font-size: 1.35rem;
+      }
+
+      .advantage-card p {
+        margin: 0;
+        color: var(--ink-soft);
+        font-size: 0.92rem;
+      }
+
+      .about {
+        position: relative;
+        color: #fff;
+        background: linear-gradient(145deg, #08283d, #061b2d);
+        overflow: hidden;
+      }
+
+      .about::before {
+        position: absolute;
+        right: -15rem;
+        bottom: -18rem;
+        width: 45rem;
+        height: 45rem;
+        border: 1px solid rgba(135, 201, 230, 0.1);
+        border-radius: 50%;
+        content: "";
+        box-shadow: 0 0 0 7rem rgba(135, 201, 230, 0.018);
+      }
+
+      .about .section-head {
+        position: relative;
+      }
+
+      .about .section-head > p {
+        color: rgba(255, 255, 255, 0.62);
+      }
+
+      .belief-grid {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+
+      .belief-card {
+        min-height: 18rem;
+        padding: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.13);
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.045);
+      }
+
+      .belief-card:last-child {
+        display: grid;
+        min-height: auto;
+        grid-column: 1 / -1;
+        grid-template-columns: 0.5fr 1.5fr;
+        gap: 2rem;
+        align-items: center;
+      }
+
+      .belief-card span {
+        color: var(--sky);
+        font-size: 0.76rem;
+        font-weight: 800;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+
+      .belief-card h3 {
+        max-width: 18ch;
+        margin: 3.2rem 0 0;
+        font-size: clamp(1.45rem, 2.4vw, 2rem);
+        line-height: 1.42;
+      }
+
+      .belief-card:last-child h3 {
+        margin: 0;
+      }
+
+      .belief-card p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.62);
+      }
+
+      .contact {
+        background: var(--paper);
+      }
+
+      .contact-panel {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 4rem;
+        align-items: center;
+        padding: clamp(2rem, 5vw, 4rem);
+        border: 1px solid var(--line);
+        border-radius: 2rem;
+        background:
+          radial-gradient(circle at 90% 10%, rgba(0, 155, 218, 0.1), transparent 17rem),
+          var(--mist);
+      }
+
+      .contact-copy > p {
+        max-width: 40rem;
+        margin-top: 1.1rem;
+      }
+
+      .contact-action {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .contact-action .button {
+        color: #fff;
+        background: var(--blue);
+      }
+
+      .contact-mail {
+        color: var(--blue);
+        font-size: 0.92rem;
+        font-weight: 700;
+      }
+
+      .contact-mail:hover,
+      .contact-mail:focus-visible {
+        text-decoration: underline;
+        text-underline-offset: 0.25em;
+      }
+
+      .site-footer {
+        padding: 2.4rem 0;
+        color: rgba(255, 255, 255, 0.55);
+        background: var(--navy);
+      }
+
+      .footer-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+      }
+
+      .footer-brand {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .footer-brand img {
+        width: 2.6rem;
+        filter: brightness(0) invert(1);
+        opacity: 0.88;
+      }
+
+      .footer-brand strong {
+        display: block;
+        color: #fff;
+        font-size: 0.9rem;
+      }
+
+      .footer-brand span,
+      .site-footer small {
+        font-size: 0.76rem;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(1.5rem);
+        transition: opacity 650ms ease, transform 650ms ease;
+      }
+
+      .reveal.is-visible {
+        opacity: 1;
+        transform: none;
+      }
+
+      @media (max-width: 980px) {
+        :root {
+          --container: min(100% - 2.2rem, 46rem);
+        }
+
+        .menu-toggle {
+          display: block;
+        }
+
+        .site-nav {
+          position: absolute;
+          top: calc(100% + 0.6rem);
+          right: 1.1rem;
+          left: 1.1rem;
+          display: grid;
+          gap: 0;
+          padding: 0.65rem;
+          border: 1px solid rgba(255, 255, 255, 0.14);
+          border-radius: 1.15rem;
+          background: rgba(6, 27, 45, 0.98);
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+          opacity: 0;
+          pointer-events: none;
+          transform: translateY(-0.7rem);
+          transition: opacity 180ms ease, transform 180ms ease;
+        }
+
+        .site-nav.is-open {
+          opacity: 1;
+          pointer-events: auto;
+          transform: none;
+        }
+
+        .site-nav a {
+          padding: 0.8rem 0.9rem;
+          border-radius: 0.7rem;
+        }
+
+        .site-nav a::after {
+          display: none;
+        }
+
+        .nav-cta {
+          margin-top: 0.35rem;
+          text-align: center;
+        }
+
+        .hero-grid,
+        .philosophy-grid,
+        .tailu-grid,
+        .contact-panel {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-grid {
+          gap: 4rem;
+        }
+
+        .hero h1 {
+          max-width: 14ch;
+        }
+
+        .context-field {
+          width: min(100%, 28rem);
+        }
+
+        .section-head {
+          grid-template-columns: 1fr;
+          gap: 1.25rem;
+        }
+
+        .comparison {
+          max-width: 40rem;
+          order: 2;
+        }
+
+        .comparison::before {
+          display: none;
+        }
+
+        .engine-flow {
+          grid-template-columns: 1fr;
+        }
+
+        .engine-flow::before {
+          display: none;
+        }
+
+        .engine-card {
+          min-height: auto;
+        }
+
+        .engine-number {
+          margin-bottom: 2rem;
+        }
+
+        .capability-card,
+        .capability-card:nth-child(4),
+        .capability-card:nth-child(5) {
+          min-height: 15rem;
+          grid-column: span 6;
+        }
+
+        .capability-card:last-child {
+          grid-column: span 12;
+        }
+
+        .phone-stage {
+          min-height: auto;
+        }
+
+        .advantage-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .advantage-card:nth-child(2) {
+          border-right: 0;
+        }
+
+        .advantage-card:nth-child(-n + 2) {
+          border-bottom: 1px solid var(--line);
+        }
+
+        .contact-action {
+          padding-top: 0.5rem;
+        }
+      }
+
+      @media (max-width: 640px) {
+        :root {
+          --container: min(100% - 1.4rem, 36rem);
+        }
+
+        .site-header {
+          height: 4.5rem;
+        }
+
+        .brand img {
+          width: 8.6rem;
+        }
+
+        .hero {
+          min-height: auto;
+          padding: 8rem 0 5.5rem;
+        }
+
+        .hero-actions {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .button {
+          width: 100%;
+        }
+
+        .context-field {
+          width: calc(100% - 1rem);
+        }
+
+        .field-core {
+          width: 6.5rem;
+          height: 6.5rem;
+        }
+
+        .field-core img {
+          width: 4.25rem;
+        }
+
+        .field-label {
+          min-width: 4.7rem;
+          min-height: 2.2rem;
+          padding: 0.4rem 0.55rem;
+          font-size: 0.72rem;
+        }
+
+        .field-output {
+          right: -2%;
+          font-size: 0.65rem;
+        }
+
+        .hero-footnote {
+          display: none;
+        }
+
+        .section {
+          padding: 5.5rem 0;
+        }
+
+        .section-head {
+          margin-bottom: 2.5rem;
+        }
+
+        .compare-card:first-child,
+        .compare-card:last-child {
+          width: 100%;
+        }
+
+        .capability-card,
+        .capability-card:nth-child(4),
+        .capability-card:nth-child(5),
+        .capability-card:last-child {
+          min-height: 14rem;
+          grid-column: 1 / -1;
+        }
+
+        .product-flow {
+          grid-template-columns: 1fr;
+        }
+
+        .phone-stage img {
+          width: min(88%, 19rem);
+        }
+
+        .advantage-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .advantage-card {
+          min-height: 18rem;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .advantage-card:last-child {
+          border-bottom: 0;
+        }
+
+        .belief-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .belief-card:last-child {
+          grid-column: auto;
+          grid-template-columns: 1fr;
+        }
+
+        .belief-card h3 {
+          margin-top: 2.4rem;
+        }
+
+        .footer-wrap {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+        }
+
+        .reveal {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+    <link rel="stylesheet" href="effects.css" />
+  </head>
+  <body>
+    <noscript><style>.reveal { opacity: 1; transform: none; }.intro-loader { display: none; }</style></noscript>
+    <div class="intro-loader" id="intro-loader" role="status" aria-live="polite">
+      <div class="intro-loader__inner">
+        <img src="assets/edmor-mark.png" alt="" />
+        <p><span>const</span> realWorld = <strong>await</strong> EDMOR.understand(context);</p>
+        <div class="intro-loader__track"><i></i></div>
+        <button type="button" id="skip-intro">SKIP INTRO</button>
+      </div>
+    </div>
+    <div class="scroll-progress" aria-hidden="true"><i id="scroll-progress"></i></div>
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-ring" aria-hidden="true"></div>
+    <a class="skip-link" href="#main">跳到主要內容</a>
+
+    <header class="site-header" id="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="#top" aria-label="EDMOR Technology 首頁">
+          <img src="assets/edmor-logo.png" alt="EDMOR Technology" />
+        </a>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-label="開啟導覽選單"
+          aria-controls="site-nav"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="site-nav" id="site-nav" aria-label="主要導覽">
+          <a href="#approach">核心方法</a>
+          <a href="#capabilities">服務能力</a>
+          <a href="#tailu">產品案例</a>
+          <a href="#team">團隊</a>
+          <a href="#about">關於 EDMOR</a>
+          <a class="nav-cta" href="#contact">合作洽談</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="container hero-grid">
+          <div class="hero-copy reveal">
+            <p class="eyebrow">Field-driven AI · 場域導向</p>
+            <h1 id="hero-title">讓 AI <em>看懂</em>真實世界。</h1>
+            <p class="hero-lede">
+              EDMOR 將 AI 能力導入具體場景，整合影像、語音與資料，從辨識訊號、理解脈絡，到產出可執行的行動建議。
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#approach">了解我們的方法</a>
+              <a class="button button-ghost" href="mailto:contact@edmor.ai?subject=EDMOR%20合作洽談">與我們談談</a>
+            </div>
+          </div>
+
+          <div class="context-field reveal" aria-label="EDMOR 將多元訊號轉化為決策支援的示意圖">
+            <span class="field-axis" aria-hidden="true"></span>
+            <div class="field-core">
+              <img src="assets/edmor-mark.png" alt="" />
+            </div>
+            <div class="field-label"><span>影像</span></div>
+            <div class="field-label"><span>語音</span></div>
+            <div class="field-label"><span>資料</span></div>
+            <div class="field-label"><span>情境</span></div>
+            <div class="field-output">Decision support</div>
+          </div>
+        </div>
+        <div class="hero-footnote">Scroll to understand</div>
+      </section>
+
+      <section class="signal-story" id="signal-story" aria-labelledby="signal-story-title">
+        <div class="signal-story__sticky">
+          <div class="signal-story__grid container">
+            <div class="signal-story__visual" aria-hidden="true">
+              <div class="signal-orbit signal-orbit--one"></div>
+              <div class="signal-orbit signal-orbit--two"></div>
+              <div class="signal-window">
+                <span class="signal-noise"></span>
+                <img src="assets/edmor-mark.png" alt="" />
+              </div>
+              <span class="signal-coord">25.0330° N<br />121.5654° E</span>
+            </div>
+            <div class="signal-story__copy">
+              <p class="story-kicker">AI IN THE REAL WORLD / 01—03</p>
+              <h2 id="signal-story-title">不是只看見資料，<br />而是理解正在發生什麼。</h2>
+              <div class="story-steps">
+                <article class="story-step is-active" data-story-step="0">
+                  <span>01 / RECOGNITION</span>
+                  <h3>辨識訊號</h3>
+                  <p>從影像、聲音與行為資料中，捕捉真實環境裡值得被注意的變化。</p>
+                </article>
+                <article class="story-step" data-story-step="1">
+                  <span>02 / UNDERSTANDING</span>
+                  <h3>理解脈絡</h3>
+                  <p>把碎片訊號放回使用者、流程與場域，建立能被解讀的完整情境。</p>
+                </article>
+                <article class="story-step" data-story-step="2">
+                  <span>03 / DECISION SUPPORT</span>
+                  <h3>輔助決策</h3>
+                  <p>把理解轉成清楚、可執行的下一步，讓人更有把握地採取行動。</p>
+                </article>
+              </div>
+              <div class="story-meter" aria-hidden="true"><i></i></div>
+            </div>
+          </div>
+          <div class="story-chapter" aria-hidden="true"><span>EDMOR</span><b>UNDERSTAND THE CONTEXT</b></div>
+        </div>
+      </section>
+
+      <section class="section philosophy" id="approach">
+        <div class="container philosophy-grid">
+          <div class="comparison reveal" aria-label="傳統 AI 與 EDMOR AI 的差異">
+            <article class="compare-card">
+              <span class="compare-label">Traditional AI</span>
+              <strong>看見資料</strong>
+              <p>辨識單點資訊與生成內容，對現場脈絡的掌握有限。</p>
+            </article>
+            <article class="compare-card">
+              <span class="compare-label">EDMOR AI</span>
+              <strong>看懂情境</strong>
+              <p>整理場域脈絡，協助人做出更好的判斷與行動。</p>
+            </article>
+          </div>
+
+          <div class="split-copy reveal">
+            <p class="eyebrow">Our approach</p>
+            <h2>AI 的價值，從理解情境開始。</h2>
+            <p>
+              我們從真實需求出發，先理解使用者、流程與限制，再選擇合適的技術。每一套系統都要能在現場被使用、被驗證，也能持續延伸。
+            </p>
+            <div class="principle-line">
+              <span aria-hidden="true">AI</span>
+              <p>技術服務現場，產品回應真實需求。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section engine" aria-labelledby="engine-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <div>
+              <p class="eyebrow">EDMOR core engine</p>
+              <h2 id="engine-title">從訊號，到可以採取的下一步。</h2>
+            </div>
+            <p>
+              核心引擎把分散的現場資訊依序轉為辨識結果、情境理解與具體建議，形成可重複、可擴張的應用模式。
+            </p>
+          </div>
+
+          <div class="engine-flow">
+            <article class="engine-card reveal">
+              <div class="engine-number">01</div>
+              <h3>辨識<span>Recognition</span></h3>
+              <p>透過影像、語音與資料，精準捕捉環境與對象訊號。</p>
+              <span class="engine-tag">輸入：多元現場資料</span>
+            </article>
+            <article class="engine-card reveal">
+              <div class="engine-number">02</div>
+              <h3>理解<span>Understanding</span></h3>
+              <p>結合特定場域的真實脈絡，進行深度推論與判讀。</p>
+              <span class="engine-tag">核心：場域邏輯</span>
+            </article>
+            <article class="engine-card reveal">
+              <div class="engine-number">03</div>
+              <h3>輔助決策<span>Decision support</span></h3>
+              <p>產出具體、可執行的建議，並建立後續行動方向。</p>
+              <span class="engine-tag">輸出：行動建議</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section capabilities" id="capabilities" aria-labelledby="capabilities-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <div>
+              <p class="eyebrow">What we deliver</p>
+              <h2 id="capabilities-title">讓 AI 應用真正進入場域。</h2>
+            </div>
+            <p>
+              從需求定義、資料整理、系統開發，到導入驗證與後續延伸，EDMOR 提供完整的落地路徑。
+            </p>
+          </div>
+
+          <div class="capability-grid">
+            <article class="capability-card reveal">
+              <span class="capability-index">01 / SYSTEM</span>
+              <div>
+                <h3>AI 軟體與系統開發</h3>
+                <p>依特定情境開發產品與系統，讓技術融入既有工作流程。</p>
+              </div>
+            </article>
+            <article class="capability-card reveal">
+              <span class="capability-index">02 / DATA</span>
+              <div>
+                <h3>影像、語音與資料分析</h3>
+                <p>整合結構化與非結構化資料，辨識訊號並建立可用脈絡。</p>
+              </div>
+            </article>
+            <article class="capability-card reveal">
+              <span class="capability-index">03 / VERTICAL</span>
+              <div>
+                <h3>垂直場域解決方案</h3>
+                <p>從需求定義到系統導入，為明確問題建立可驗證的方案。</p>
+              </div>
+            </article>
+            <article class="capability-card reveal">
+              <span class="capability-index">04 / INTEGRATION</span>
+              <div>
+                <h3>顧問與技術整合服務</h3>
+                <p>共同盤點場域、資料與流程，規劃可執行的導入策略。</p>
+              </div>
+            </article>
+            <article class="capability-card reveal">
+              <span class="capability-index">05 / EXTENSION</span>
+              <div>
+                <h3>平台與資料延伸應用</h3>
+                <p>透過 API、模組化與合作服務，讓已驗證的能力延伸至更多場景。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section tailu" id="tailu" aria-labelledby="tailu-title">
+        <div class="tailu-showcase container">
+          <div class="tailu-intro reveal">
+            <div>
+              <p class="eyebrow">Product case · TailU</p>
+              <h2 id="tailu-title">把毛孩的日常，放進一個<span>可以互動的世界。</span></h2>
+            </div>
+            <p>
+              TailU 從影像與行為訊號理解毛孩的情緒與照護情境，串起記錄、社群、活動與 AI 互動，讓每一次陪伴都有跡可循。
+            </p>
+          </div>
+
+          <div class="app-tabs reveal" role="tablist" aria-label="TailU 功能畫面">
+            <button class="is-active" type="button" role="tab" aria-selected="true" data-app-index="0">探索</button>
+            <button type="button" role="tab" aria-selected="false" data-app-index="1">地圖</button>
+            <button type="button" role="tab" aria-selected="false" data-app-index="2">分析</button>
+            <button type="button" role="tab" aria-selected="false" data-app-index="3">毛孩</button>
+            <button type="button" role="tab" aria-selected="false" data-app-index="4">聊天</button>
+            <button type="button" role="tab" aria-selected="false" data-app-index="5">AI 破冰</button>
+            <button type="button" role="tab" aria-selected="false" data-app-index="6">活動</button>
+          </div>
+
+          <div class="app-experience reveal">
+            <div class="app-deck" id="app-deck" tabindex="0" aria-label="TailU 應用程式畫面輪播，可使用左右方向鍵切換">
+              <figure class="app-screen is-active" data-app-screen="0"><img src="assets/app/discover.webp" width="622" height="1180" loading="lazy" alt="TailU 探索動態與毛孩社群畫面" /></figure>
+              <figure class="app-screen" data-app-screen="1"><img src="assets/app/map.webp" width="622" height="1180" loading="lazy" alt="TailU 附近毛孩與地圖畫面" /></figure>
+              <figure class="app-screen" data-app-screen="2"><img src="assets/app/analysis.webp" width="622" height="1180" loading="lazy" alt="TailU 行為分析紀錄畫面" /></figure>
+              <figure class="app-screen" data-app-screen="3"><img src="assets/app/profile.webp" width="622" height="1180" loading="lazy" alt="TailU 毛孩個人檔案畫面" /></figure>
+              <figure class="app-screen" data-app-screen="4"><img src="assets/app/chat.webp" width="622" height="1180" loading="lazy" alt="TailU 毛孩好友聊天畫面" /></figure>
+              <figure class="app-screen" data-app-screen="5"><img src="assets/app/icebreaker.webp" width="622" height="1180" loading="lazy" alt="TailU AI 破冰互動畫面" /></figure>
+              <figure class="app-screen" data-app-screen="6"><img src="assets/app/event.webp" width="622" height="1180" loading="lazy" alt="TailU 毛孩活動探索畫面" /></figure>
+              <span class="app-deck__glow" aria-hidden="true"></span>
+            </div>
+
+            <div class="app-caption" aria-live="polite">
+              <span class="app-caption__index"><b id="app-current">01</b> / 07</span>
+              <p class="eyebrow" id="app-label">DISCOVER TOGETHER</p>
+              <h3 id="app-title">探索彼此的毛孩日常</h3>
+              <p id="app-description">在動態牆記錄生活、找到同頻夥伴，讓陪伴從一段內容開始。</p>
+              <div class="app-controls">
+                <button type="button" id="app-prev" aria-label="上一個 TailU 畫面">←</button>
+                <button type="button" id="app-next" aria-label="下一個 TailU 畫面">→</button>
+                <span>DRAG TO EXPLORE</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tailu-method" aria-label="TailU 核心流程">
+            <span><b>01</b>辨識影像與行為</span>
+            <span><b>02</b>理解情緒與情境</span>
+            <span><b>03</b>提供照護與互動建議</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section advantages" aria-labelledby="advantages-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <div>
+              <p class="eyebrow">Why EDMOR</p>
+              <h2 id="advantages-title">真正能落地的整合能力。</h2>
+            </div>
+            <p>
+              技術只是起點。要讓 AI 在現場持續發揮價值，還需要對場域的理解、跨域資源與穩定推進能力。
+            </p>
+          </div>
+
+          <div class="advantage-grid">
+            <article class="advantage-card reveal">
+              <span class="advantage-number">01</span>
+              <div class="advantage-content">
+                <h3>場域導向</h3>
+                <p>從真實場景的痛點回推技術與產品，避免脫離現場的技術敘事。</p>
+              </div>
+            </article>
+            <article class="advantage-card reveal">
+              <span class="advantage-number">02</span>
+              <div class="advantage-content">
+                <h3>跨資源整合</h3>
+                <p>整合法務、會計、技術、設計與場域資源，建立完整的推進條件。</p>
+              </div>
+            </article>
+            <article class="advantage-card reveal">
+              <span class="advantage-number">03</span>
+              <div class="advantage-content">
+                <h3>推進力</h3>
+                <p>讓產品、治理與商業架構同步前進，把構想落實為可驗證成果。</p>
+              </div>
+            </article>
+            <article class="advantage-card reveal">
+              <span class="advantage-number">04</span>
+              <div class="advantage-content">
+                <h3>擴張性</h3>
+                <p>以模組化核心引擎複製已驗證能力，延伸至更多需要理解與決策的場域。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section team" id="team" aria-labelledby="team-title">
+        <div class="team-marquee" aria-hidden="true">
+          <div>PEOPLE WHO MAKE AI USEFUL · PEOPLE WHO MAKE AI USEFUL · PEOPLE WHO MAKE AI USEFUL ·</div>
+        </div>
+        <div class="container">
+          <div class="team-head reveal">
+            <p class="eyebrow">The people behind EDMOR</p>
+            <h2 id="team-title">跨產業、技術與品牌，<br />一起把想法推進到現場。</h2>
+            <p>點選角色，認識每一位讓 EDMOR 持續前進的夥伴。</p>
+          </div>
+
+          <div class="team-layout">
+            <div class="team-rail reveal" role="group" aria-label="EDMOR 團隊成員">
+              <button class="team-card is-active" type="button" aria-pressed="true" aria-controls="team-detail"
+                data-name="洪子峰" data-en="Morris Hung" data-role="共同創辦人暨董事長"
+                data-bio="負責產業策略、資源整合、產學合作與市場商業化規劃。"
+                data-edu="國立臺北科技大學經營管理研究所（EMBA）"
+                data-exp="台灣東芝電子處長、台灣英飛凌資深經理、金寶集團董事長特助">
+                <span class="team-card__number">01</span>
+                <span class="team-card__portrait"><img src="assets/team/morris-hung.webp" width="720" height="1080" loading="lazy" alt="Morris Hung 手作黏土風角色" /></span>
+                <span class="team-card__meta"><b>Morris Hung</b><small>共同創辦人暨董事長</small></span>
+              </button>
+              <button class="team-card" type="button" aria-pressed="false" aria-controls="team-detail"
+                data-name="郭承翰" data-en="Edward Kuo" data-role="共同創辦人暨執行長"
+                data-bio="統籌公司策略與營運，負責關鍵合作談判與跨域資源整合。"
+                data-edu="東吳大學英文系"
+                data-exp="Toshiba Market Dept.；Infineon Distribution, EMS & Mass Market">
+                <span class="team-card__number">02</span>
+                <span class="team-card__portrait"><img src="assets/team/edward-kuo.webp" width="720" height="1080" loading="lazy" alt="Edward Kuo 手作黏土風角色" /></span>
+                <span class="team-card__meta"><b>Edward Kuo</b><small>共同創辦人暨執行長</small></span>
+              </button>
+              <button class="team-card" type="button" aria-pressed="false" aria-controls="team-detail"
+                data-name="陳璽臣" data-en="Kate Chen" data-role="資深行銷總監"
+                data-bio="負責品牌定位、整合行銷、產品上市與社群推廣。"
+                data-edu="輔仁大學經濟系"
+                data-exp="博報堂集團 ACE 資深行銷總監、電通 Isobar 行銷總監、格治傳播集團公關長">
+                <span class="team-card__number">03</span>
+                <span class="team-card__portrait"><img src="assets/team/kate-chen.webp" width="720" height="1080" loading="lazy" alt="Kate Chen 手作黏土風角色" /></span>
+                <span class="team-card__meta"><b>Kate Chen</b><small>資深行銷總監</small></span>
+              </button>
+              <button class="team-card" type="button" aria-pressed="false" aria-controls="team-detail"
+                data-name="黃泫閔" data-en="Jason Huang" data-role="策略夥伴負責人"
+                data-bio="負責策略夥伴合作與關係推進。"
+                data-edu="資料待補"
+                data-exp="資料待補">
+                <span class="team-card__number">04</span>
+                <span class="team-card__portrait"><img src="assets/team/jason-huang.webp" width="720" height="1080" loading="lazy" alt="Jason Huang 手作黏土風角色" /></span>
+                <span class="team-card__meta"><b>Jason Huang</b><small>策略夥伴負責人</small></span>
+              </button>
+              <button class="team-card" type="button" aria-pressed="false" aria-controls="team-detail"
+                data-name="吳賢政" data-en="Ellis Wu" data-role="商業策略經理"
+                data-bio="負責使用者研究、產品與商業模式規劃、GA4 指標及市場驗證。"
+                data-edu="國立清華大學科技管理研究所"
+                data-exp="LINE Taiwan Data and Operation Intern；禮來商業競賽、新竹政策黑客松全國第一名">
+                <span class="team-card__number">05</span>
+                <span class="team-card__portrait"><img src="assets/team/ellis-wu.webp" width="720" height="1080" loading="lazy" alt="Ellis Wu 手作黏土風角色" /></span>
+                <span class="team-card__meta"><b>Ellis Wu</b><small>商業策略經理</small></span>
+              </button>
+            </div>
+
+            <article class="team-detail reveal" id="team-detail" aria-live="polite">
+              <div class="team-detail__top">
+                <span>SELECTED MEMBER / 01</span>
+                <span class="team-detail__glyph" aria-hidden="true">✦</span>
+              </div>
+              <p class="team-detail__zh" id="team-detail-zh">洪子峰</p>
+              <h3 id="team-detail-name">Morris Hung</h3>
+              <p class="team-detail__role" id="team-detail-role">共同創辦人暨董事長</p>
+              <p class="team-detail__bio" id="team-detail-bio">負責產業策略、資源整合、產學合作與市場商業化規劃。</p>
+              <dl>
+                <div><dt>EDUCATION</dt><dd id="team-detail-edu">國立臺北科技大學經營管理研究所（EMBA）</dd></div>
+                <div><dt>EXPERIENCE</dt><dd id="team-detail-exp">台灣東芝電子處長、台灣英飛凌資深經理、金寶集團董事長特助</dd></div>
+              </dl>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section about" id="about" aria-labelledby="about-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <div>
+              <p class="eyebrow">About EDMOR</p>
+              <h2 id="about-title">以人與現場，校準技術前進的方向。</h2>
+            </div>
+            <p>
+              我們相信，真正有價值的 AI 要能降低不確定性，讓人更理解情境，也更有把握採取行動。
+            </p>
+          </div>
+
+          <div class="belief-grid">
+            <article class="belief-card reveal">
+              <span>Vision · 願景</span>
+              <h3>成為將 AI 真正落地於真實世界場域的應用型科技公司。</h3>
+            </article>
+            <article class="belief-card reveal">
+              <span>Mission · 使命</span>
+              <h3>以 AI 為工具，從真實需求出發。</h3>
+            </article>
+            <article class="belief-card reveal">
+              <h3>AI 不取代人，而是幫助人更理解情境。</h3>
+              <p>
+                技術不該只停留在展示，而要服務現場；產品的價值，也不只在於更聰明，更在於真正有用、值得信賴。
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section contact" id="contact" aria-labelledby="contact-title">
+        <div class="container contact-panel reveal">
+          <div class="contact-copy">
+            <p class="eyebrow">Let’s build what works</p>
+            <h2 id="contact-title">您的場域，正在等待哪一個更好的決策？</h2>
+            <p>
+              如果您正在評估 AI 導入、資料應用或垂直場域合作，歡迎把現況與問題告訴我們。
+            </p>
+          </div>
+          <div class="contact-action">
+            <a class="button" href="mailto:contact@edmor.ai?subject=EDMOR%20合作洽談">開始合作洽談</a>
+            <a class="contact-mail" href="mailto:contact@edmor.ai">contact@edmor.ai</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-wrap">
+        <div class="footer-brand">
+          <img src="assets/edmor-mark.png" alt="" />
+          <div>
+            <strong>EDMOR Technology Co., Ltd.</strong>
+            <span>艾德摩爾科技股份有限公司</span>
+          </div>
+        </div>
+        <small>© <span id="year"></span> EDMOR Technology. All rights reserved.</small>
+      </div>
+    </footer>
+
+    <script>
+      const header = document.querySelector("#site-header");
+      const menuButton = document.querySelector(".menu-toggle");
+      const navigation = document.querySelector("#site-nav");
+      const navLinks = [...navigation.querySelectorAll("a[href^='#']")];
+
+      const closeMenu = () => {
+        menuButton.setAttribute("aria-expanded", "false");
+        menuButton.setAttribute("aria-label", "開啟導覽選單");
+        navigation.classList.remove("is-open");
+      };
+
+      menuButton.addEventListener("click", () => {
+        const willOpen = menuButton.getAttribute("aria-expanded") !== "true";
+        menuButton.setAttribute("aria-expanded", String(willOpen));
+        menuButton.setAttribute("aria-label", willOpen ? "關閉導覽選單" : "開啟導覽選單");
+        navigation.classList.toggle("is-open", willOpen);
+      });
+
+      navLinks.forEach((link) => link.addEventListener("click", closeMenu));
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeMenu();
+      });
+
+      window.addEventListener(
+        "scroll",
+        () => header.classList.toggle("is-scrolled", window.scrollY > 24),
+        { passive: true }
+      );
+
+      const revealObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.14, rootMargin: "0px 0px -5%" }
+      );
+
+      document.querySelectorAll(".reveal").forEach((item) => revealObserver.observe(item));
+
+      const observedSections = navLinks
+        .map((link) => document.querySelector(link.getAttribute("href")))
+        .filter(Boolean);
+
+      const sectionObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            navLinks.forEach((link) => {
+              link.classList.toggle("is-active", link.getAttribute("href") === `#${entry.target.id}`);
+            });
+          });
+        },
+        { rootMargin: "-30% 0px -60%", threshold: 0 }
+      );
+
+      observedSections.forEach((section) => sectionObserver.observe(section));
+      document.querySelector("#year").textContent = new Date().getFullYear();
+    </script>
+    <script src="site-effects.js"></script>
+  </body>
+</html>
