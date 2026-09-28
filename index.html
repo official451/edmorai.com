@@ -264,11 +264,19 @@
           0 0 0 12rem rgba(135, 201, 230, 0.018);
       }
 
-      .hero-grid {
+    .hero-grid {
         display: grid;
-        grid-template-columns: minmax(0, 1.08fr) minmax(22rem, 0.92fr);
-        gap: clamp(3rem, 8vw, 7rem);
+        /* 將 minmax(22rem, ...) 改為 minmax(0, ...)，防止右側強行佔用過大寬度 */
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: clamp(1.5rem, 4vw, 3.5rem); /* 適度縮小 gap，釋放寬度給內容 */
         align-items: center;
+      }
+      
+      /* 螢幕較窄時（例如 992px 以下）改為單欄上下排列，避免左右互相擠壓 */
+      @media (max-width: 992px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+        }
       }
 
       .eyebrow {
